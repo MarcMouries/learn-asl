@@ -1,0 +1,33 @@
+<div class="panel panel-default asl-widget">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{c.data.title}}</h3>
+  </div>
+  <div class="panel-body">
+
+    <form name="aslForm" class="asl-form" ng-submit="$event.preventDefault()" novalidate>
+      <div class="form-group">
+        <label for="asl-input">Type letters to see their American Sign Language signs</label>
+        <div class="asl-input-row">
+          <input type="text" id="asl-input" name="aslInput" class="form-control asl-input"
+                 ng-model="c.text" ng-change="c.update()" ng-model-options="{debounce: 100}"
+                 placeholder="Type here…" autocomplete="off" autofocus />
+          <button type="button" class="btn btn-default asl-clear" ng-click="c.clear()"
+                  ng-disabled="!c.text">Clear</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="asl-signs" ng-if="c.signs.length">
+      <div class="asl-sign" ng-repeat="sign in c.signs track by $index">
+        <img class="asl-sign-img" ng-src="{{sign.image_url}}" alt="ASL sign for {{sign.letter}}" />
+        <div class="asl-sign-letter">{{sign.letter}}</div>
+      </div>
+    </div>
+
+    <div class="asl-empty text-center text-muted" ng-if="!c.signs.length">
+      <i class="fa fa-hand-paper-o fa-2x"></i>
+      <p>Start typing to see the signs.</p>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,32 @@
+.asl-navbar {
+  margin-bottom: 0;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid sp-rgb(--now-color_divider--tertiary, #CFD5D7);
+  background-color: sp-rgb(--now-color_background--primary, #FFFFFF);
+}
+
+.asl-navbar .asl-brand {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 0 16px;
+}
+
+.asl-navbar .snc-powered-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.asl-navbar .snc-powered-by__text {
+  font-size: 14px;
+  font-weight: 600;
+  color: sp-rgb(--now-color_text--primary, #10171A);
+}
+
+.asl-navbar .snc-brand-logo {
+  display: block;
+  height: 20px;
+  width: auto;
+}
