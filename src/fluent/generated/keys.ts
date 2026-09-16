@@ -84,7 +84,7 @@ declare global {
                     fca39c3293d3cb90df5f3ca47aba1082: {
                         table: 'sys_properties'
                         id: 'fca39c3293d3cb90df5f3ca47aba1082'
-                        deleted: false
+                        deleted: true
                     }
                     package_json: {
                         table: 'sys_module'
