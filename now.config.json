@@ -1,5 +1,10 @@
 {
     "scope": "x_snc_asl",
     "scopeId": "7961423c939a5210df5f3ca47aba105b",
-    "name": "ASL"
+    "name": "ASL",
+    "licensing": {
+        "enforceLicense": "none"
+    },
+    "logo": "da61c6b893da5210df5f3ca47aba1020",
+    "ideCreated": "GAC"
 }

@@ -21,6 +21,7 @@
   gap: 12px;
   margin-top: 20px;
   width: 100%;
+  align-items: flex-start;
 }
 
 .asl-widget .asl-sign {
@@ -31,12 +32,58 @@
   min-width: 0;
 }
 
+/* a word gap takes roughly half the width of a sign */
+.asl-widget .asl-sign-gap {
+  flex: 0 0 auto;
+  width: 24px;
+  align-self: stretch;
+}
+
+.asl-widget .asl-gap-mark {
+  width: 2px;
+  height: 100px;
+  margin: 0 auto;
+  background-color: sp-rgb(--now-color_divider--tertiary, #CFD5D7);
+}
+
 .asl-widget .asl-sign-img {
   width: 100%;
   max-width: 100px;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: contain;
+}
+
+/* description-only card, used when a sign has no image yet */
+.asl-widget .asl-sign-desc {
+  width: 100%;
+  max-width: 100px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6px;
+  overflow: hidden;
+  border: 1px dashed sp-rgb(--now-color_border--tertiary, #CFD5D7);
+  border-radius: 6px;
+  background-color: sp-rgb(--now-color_background--secondary, #F5F6F7);
+}
+
+.asl-widget .asl-sign-desc-glyph {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: sp-rgb(--now-color_text--primary, #10171A);
+}
+
+.asl-widget .asl-sign-desc-text {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  color: sp-rgb(--now-color_text--secondary, #232E33);
+  overflow: hidden;
 }
 
 .asl-widget .asl-sign-letter {

@@ -1,0 +1,92 @@
+<div class="panel panel-default asl-lessons">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{c.data.title}}</h3>
+  </div>
+  <div class="panel-body">
+
+    <div class="alert alert-info" ng-if="!c.data.loggedIn">
+      <i class="fa fa-info-circle"></i>
+      Browse and learn freely. <strong>Sign in</strong> to save which signs you have learned.
+    </div>
+
+    <!-- lesson list -->
+    <div ng-if="!c.data.selectedLesson">
+      <ul class="list-group asl-lesson-list">
+        <li class="list-group-item asl-lesson-item"
+            ng-repeat="lesson in c.data.lessons track by lesson.sys_id">
+          <div class="asl-lesson-main">
+            <button type="button" class="btn btn-link asl-lesson-title"
+                    ng-click="c.openLesson(lesson.sys_id)" ng-disabled="c.busy">
+              {{lesson.title}}
+            </button>
+            <p class="asl-lesson-desc">{{lesson.description}}</p>
+          </div>
+          <div class="asl-lesson-meta">
+            <div class="asl-progress-track" ng-if="c.data.loggedIn">
+              <div class="asl-progress-fill" ng-style="{width: lesson.percent + '%'}"></div>
+            </div>
+            <span class="asl-lesson-count" ng-if="c.data.loggedIn">
+              {{lesson.learned}} / {{lesson.total}} learned ({{lesson.percent}}%)
+            </span>
+            <span class="asl-lesson-count" ng-if="!c.data.loggedIn">
+              {{lesson.total}} signs
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="text-center text-muted" ng-if="!c.data.lessons.length">
+        <p>No lessons available yet.</p>
+      </div>
+    </div>
+
+    <!-- single lesson -->
+    <div ng-if="c.data.selectedLesson">
+      <button type="button" class="btn btn-default asl-back"
+              ng-click="c.backToLessons()" ng-disabled="c.busy">
+        <i class="fa fa-arrow-left"></i> All lessons
+      </button>
+
+      <h4 class="asl-detail-title">{{c.data.selectedLesson.title}}</h4>
+      <p class="text-muted">{{c.data.selectedLesson.description}}</p>
+
+      <div class="asl-card-grid">
+        <div class="asl-card" ng-class="{'asl-card-learned': sign.learned}"
+             ng-repeat="sign in c.data.signs track by sign.sys_id">
+
+          <img class="asl-card-img" ng-if="sign.hasImage"
+               ng-src="{{sign.image_url}}" alt="ASL sign for {{sign.label}}" />
+
+          <div class="asl-card-noimg" ng-if="!sign.hasImage">
+            <span class="asl-card-glyph">{{sign.label}}</span>
+          </div>
+
+          <div class="asl-card-label">{{sign.label}}</div>
+          <p class="asl-card-desc" ng-if="sign.description">{{sign.description}}</p>
+
+          <a class="asl-card-link" ng-if="sign.hasReference"
+             ng-href="{{sign.reference_url}}" target="_blank" rel="noopener noreferrer">
+            <i class="fa fa-play-circle"></i> Watch it signed
+          </a>
+
+          <p class="asl-card-attr" ng-if="sign.attribution">{{sign.attribution}}</p>
+
+          <button type="button" class="btn btn-sm asl-card-btn"
+                  ng-class="sign.learned ? 'btn-success' : 'btn-default'"
+                  ng-click="c.toggleLearned(sign)"
+                  ng-disabled="!c.data.loggedIn || c.busy"
+                  title="{{c.data.loggedIn ? 'Toggle learned' : 'Sign in to save progress'}}">
+            <i class="fa" ng-class="sign.learned ? 'fa-check' : 'fa-circle-thin'"></i>
+            <span ng-if="sign.learned">Learned</span>
+            <span ng-if="!sign.learned">Mark learned</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center text-muted" ng-if="!c.data.signs.length">
+        <p>This lesson has no signs yet.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

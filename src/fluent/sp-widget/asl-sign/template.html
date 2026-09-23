@@ -6,7 +6,7 @@
 
     <form name="aslForm" class="asl-form" ng-submit="$event.preventDefault()" novalidate>
       <div class="form-group">
-        <label for="asl-input">Type letters to see their American Sign Language signs</label>
+        <label for="asl-input">Type letters or numbers to see their American Sign Language signs</label>
         <div class="asl-input-row">
           <input type="text" id="asl-input" name="aslInput" class="form-control asl-input"
                  ng-model="c.text" ng-change="c.update()" ng-model-options="{debounce: 100}"
@@ -18,9 +18,24 @@
     </form>
 
     <div class="asl-signs" ng-if="c.signs.length">
-      <div class="asl-sign" ng-repeat="sign in c.signs track by $index">
-        <img class="asl-sign-img" ng-src="{{sign.image_url}}" alt="ASL sign for {{sign.letter}}" />
-        <div class="asl-sign-letter">{{sign.letter}}</div>
+      <div class="asl-sign" ng-class="{'asl-sign-gap': sign.isSpace}"
+           ng-repeat="sign in c.signs track by $index">
+
+        <!-- word gap -->
+        <div class="asl-gap-mark" ng-if="sign.isSpace" title="{{sign.description}}"></div>
+
+        <!-- sign with an image -->
+        <img class="asl-sign-img" ng-if="!sign.isSpace && sign.hasImage"
+             ng-src="{{sign.image_url}}" alt="ASL sign for {{sign.label}}" />
+
+        <!-- sign described in words (no image available yet) -->
+        <div class="asl-sign-desc" ng-if="!sign.isSpace && !sign.hasImage"
+             title="{{sign.description}}">
+          <span class="asl-sign-desc-glyph">{{sign.label}}</span>
+          <span class="asl-sign-desc-text">{{sign.description}}</span>
+        </div>
+
+        <div class="asl-sign-letter" ng-if="!sign.isSpace">{{sign.label}}</div>
       </div>
     </div>
 
