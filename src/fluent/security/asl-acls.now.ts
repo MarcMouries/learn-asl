@@ -2,41 +2,37 @@ import '@servicenow/sdk/global'
 import { Acl } from '@servicenow/sdk/core'
 
 /*
- * Content tables (Sign, Lesson) are readable by everyone, including the guest
- * user, so the public portal works without login. No roles = no role required.
+ * ACL POSTURE FOR THIS APP
+ *
+ * There are deliberately NO public access controls on the content or score
+ * tables. That is the security model, not an omission.
+ *
+ * Every read and write happens inside a Service Portal widget server script
+ * using plain GlideRecord, which does not evaluate ACLs. Verified empirically:
+ * impersonating the guest user, plain GlideRecord returned rows from a table
+ * GlideRecordSecure returned zero rows for. So the anonymous portal keeps
+ * working while the Table/REST API stays closed.
+ *
+ * What that buys us:
+ *
+ *   x_snc_asl_score   — nobody can POST a forged score. Previously a public
+ *                       create ACL meant anyone could insert score=10 straight
+ *                       into the Table API, bypassing the quiz entirely.
+ *   x_snc_asl_sign    — the answer key is no longer readable. Previously public
+ *                       read meant a player could fetch every token and map
+ *                       sign -> letter before answering.
+ *   x_snc_asl_lesson  — closed for consistency; the widget serves it.
+ *   x_snc_asl_quiz_session — never had ACLs; holds the live answer key.
+ *
+ * Admins still reach these tables through admin rights for support and content
+ * editing. If some future integration needs REST access, add a narrow ACL for
+ * that specific case rather than restoring a blanket `answer = true`.
+ *
+ * The progress ACLs below are retained but currently unreachable: the app no
+ * longer offers sign-in, so there is no authenticated user to own a row. See
+ * PLAN.md — the table is a candidate for removal.
  */
-export const aslSignRead = Acl({
-    $id: Now.ID['x_snc_asl_sign_read'],
-    type: 'record',
-    table: 'x_snc_asl_sign',
-    field: '*',
-    operation: 'read',
-    decisionType: 'allow',
-    adminOverrides: true,
-    // Deliberately public: no role required, so the guest user on the public
-    // portal can read sign content. An explicit `answer = true` is how "allow
-    // everyone" is expressed — an ACL with no roles/condition/script is invalid.
-    script: `answer = true;`,
-    description: 'Public read access to ASL signs.',
-})
 
-export const aslLessonRead = Acl({
-    $id: Now.ID['x_snc_asl_lesson_read'],
-    type: 'record',
-    table: 'x_snc_asl_lesson',
-    field: '*',
-    operation: 'read',
-    decisionType: 'allow',
-    adminOverrides: true,
-    // Deliberately public, same as the sign read ACL above.
-    script: `answer = true;`,
-    description: 'Public read access to ASL lessons.',
-})
-
-/*
- * Progress is private to the owning user. Read/write/delete are limited to rows
- * the current user owns; create requires an authenticated session.
- */
 export const aslProgressRead = Acl({
     $id: Now.ID['x_snc_asl_progress_read'],
     type: 'record',
@@ -70,15 +66,4 @@ export const aslProgressDelete = Acl({
     adminOverrides: true,
     script: `answer = (current.user == gs.getUserID());`,
     description: 'Users can delete only their own ASL progress.',
-})
-
-export const aslProgressCreate = Acl({
-    $id: Now.ID['x_snc_asl_progress_create'],
-    type: 'record',
-    table: 'x_snc_asl_progress',
-    operation: 'create',
-    decisionType: 'allow',
-    adminOverrides: true,
-    securityAttribute: 'user_is_authenticated',
-    description: 'Signed-in users can record their own ASL progress.',
 })

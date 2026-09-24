@@ -1,0 +1,236 @@
+.asl-play .asl-play-lead {
+  font-size: 16px;
+  color: sp-rgb(--now-color_text--secondary, #232E33);
+}
+
+/* ---------------------------------------------------------- name entry */
+.asl-play .asl-play-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.asl-play .asl-play-input {
+  font-size: 24px;
+  height: auto;
+  padding: 8px 12px;
+  flex: 1 1 auto;
+}
+
+.asl-play .asl-play-go {
+  flex: 0 0 auto;
+}
+
+/* ------------------------------------------------------------- reveal */
+.asl-play .asl-play-reveal-title {
+  margin-top: 0;
+}
+
+.asl-play .asl-play-signs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  margin: 16px 0;
+  width: 100%;
+}
+
+.asl-play .asl-play-sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.asl-play .asl-play-sign-img {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.asl-play .asl-play-sign-label {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 700;
+  color: $brand-primary;
+}
+
+.asl-play .asl-play-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* --------------------------------------------------------------- quiz */
+.asl-play .asl-play-quiz-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.asl-play .asl-play-counter {
+  font-size: 14px;
+  font-weight: 600;
+  color: sp-rgb(--now-color_text--secondary, #232E33);
+}
+
+.asl-play .asl-play-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  color: sp-rgb(--now-color_text--primary, #10171A);
+  background-color: sp-rgb(--now-color--primary-0, #BDDEE7);
+}
+
+.asl-play .asl-play-progress {
+  height: 8px;
+  margin: 8px 0 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: sp-rgb(--now-color_background--tertiary, #E2E5E7);
+}
+
+.asl-play .asl-play-progress-fill {
+  height: 100%;
+  background-color: $brand-primary;
+  transition: width 150ms ease-in-out;
+}
+
+.asl-play .asl-play-question {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.asl-play .asl-play-quiz-sign {
+  text-align: center;
+}
+
+.asl-play .asl-play-quiz-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}
+
+.asl-play .asl-play-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.asl-play .asl-play-option {
+  width: 72px;
+  height: 72px;
+  font-size: 30px;
+  font-weight: 700;
+  padding: 0;
+}
+
+.asl-play .asl-play-note {
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------ results */
+.asl-play .asl-play-score {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.asl-play .asl-play-score-big {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: $brand-primary;
+}
+
+.asl-play .asl-play-score-sub {
+  font-size: 16px;
+  color: sp-rgb(--now-color_text--secondary, #232E33);
+}
+
+.asl-play .asl-play-review {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.asl-play .asl-play-review-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 92px;
+  padding: 8px;
+  border: 1px solid sp-rgb(--now-color_border--tertiary, #CFD5D7);
+  border-radius: 6px;
+}
+
+.asl-play .asl-play-ok {
+  border-color: $brand-success;
+  background-color: sp-rgb(--now-color_alert--positive-0, #C7DCB5);
+}
+
+.asl-play .asl-play-wrong {
+  border-color: $brand-danger;
+  background-color: sp-rgb(--now-color_alert--critical-0, #F9C8CE);
+}
+
+.asl-play .asl-play-review-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.asl-play .asl-play-review-answer {
+  margin-top: 4px;
+  text-align: center;
+}
+
+.asl-play .asl-play-review-correct {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: sp-rgb(--now-color_text--primary, #10171A);
+}
+
+.asl-play .asl-play-review-yours {
+  display: block;
+  font-size: 12px;
+  color: sp-rgb(--now-color_text--secondary, #232E33);
+}
+
+/* -------------------------------------------------------- leaderboard */
+.asl-play .asl-play-lb-heading {
+  margin-top: 24px;
+}
+
+.asl-play .asl-play-lb {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.asl-play .asl-play-lb > li {
+  padding: 4px 0;
+}
+
+.asl-play .asl-play-lb-name {
+  font-weight: 600;
+}
+
+.asl-play .asl-play-lb-score {
+  margin-left: 8px;
+  color: sp-rgb(--now-color_text--secondary, #232E33);
+}
+
+.asl-play .asl-play-lb-table {
+  margin-bottom: 20px;
+}

@@ -1,9 +1,22 @@
+/* The header is a single row: brand lockup on the left, nav links beside it.
+   Using flex here rather than inline-block + vertical-align:middle, because the
+   brand (60px) and the nav links are different heights and vertical-align
+   compares line boxes rather than centring the elements. */
 .asl-navbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 0;
   border: 0;
   border-radius: 0;
   border-bottom: 1px solid sp-rgb(--now-color_divider--tertiary, #CFD5D7);
   background-color: sp-rgb(--now-color_background--primary, #FFFFFF);
+}
+
+.asl-navbar .navbar-header {
+  float: none;
+  display: flex;
+  align-items: center;
 }
 
 .asl-navbar .asl-brand {
@@ -13,15 +26,25 @@
   padding: 0 16px;
 }
 
+/* "Built with" + ServiceNow wordmark + "App Engine" is a lockup, so the three
+   items must share one BASELINE — centring their boxes is what made it look off.
+   The SVG is a 20px box whose wordmark baseline sits at y=19.35 of the 0 0 132 20
+   viewBox, i.e. ~0.65px above the box floor. The 14px text, inheriting the
+   portal's 1.42857 line-height, has a ~20px line box with its baseline ~14.2px
+   down. Both boxes are ~20px tall, so `align-items: center` lines the boxes up
+   perfectly while leaving the baselines ~5px apart — which reads as the text
+   floating above the logo's letters. */
 .asl-navbar .snc-powered-by {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
 }
 
 .asl-navbar .snc-powered-by__text {
   font-size: 14px;
   font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
   color: sp-rgb(--now-color_text--primary, #10171A);
 }
 
@@ -29,29 +52,35 @@
   display: block;
   height: 20px;
   width: auto;
+  flex: 0 0 auto;
+  /* A replaced element has no real baseline, so flexbox synthesises one from its
+     bottom margin edge. That would seat the SVG's floor on the text baseline,
+     leaving the wordmark itself floating 0.65px high. This negative margin
+     raises the synthesised baseline by exactly that amount, so the wordmark's
+     own baseline lands on the text baseline instead of the box floor. */
+  margin-bottom: -0.65px;
 }
 
-.asl-navbar .navbar-header {
-  float: none;
-  display: inline-block;
-  vertical-align: middle;
-}
-
+/* Nav links */
 .asl-navbar .asl-nav {
   float: none;
-  display: inline-block;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
   margin: 0 0 0 24px;
+  padding-left: 0;
+  list-style: none;
 }
 
 .asl-navbar .asl-nav > li {
-  float: left;
+  float: none;
 }
 
 .asl-navbar .asl-nav > li > a {
+  display: block;
   padding: 20px 14px;
   font-size: 15px;
   font-weight: 600;
+  line-height: 20px;
   color: sp-rgb(--now-color_text--primary, #10171A);
 }
 

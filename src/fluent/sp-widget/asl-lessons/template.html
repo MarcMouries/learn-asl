@@ -4,11 +4,6 @@
   </div>
   <div class="panel-body">
 
-    <div class="alert alert-info" ng-if="!c.data.loggedIn">
-      <i class="fa fa-info-circle"></i>
-      Browse and learn freely. <strong>Sign in</strong> to save which signs you have learned.
-    </div>
-
     <!-- lesson list -->
     <div ng-if="!c.data.selectedLesson">
       <ul class="list-group asl-lesson-list">
@@ -22,15 +17,7 @@
             <p class="asl-lesson-desc">{{lesson.description}}</p>
           </div>
           <div class="asl-lesson-meta">
-            <div class="asl-progress-track" ng-if="c.data.loggedIn">
-              <div class="asl-progress-fill" ng-style="{width: lesson.percent + '%'}"></div>
-            </div>
-            <span class="asl-lesson-count" ng-if="c.data.loggedIn">
-              {{lesson.learned}} / {{lesson.total}} learned ({{lesson.percent}}%)
-            </span>
-            <span class="asl-lesson-count" ng-if="!c.data.loggedIn">
-              {{lesson.total}} signs
-            </span>
+            <span class="asl-lesson-count">{{lesson.total}} signs</span>
           </div>
         </li>
       </ul>
@@ -51,8 +38,7 @@
       <p class="text-muted">{{c.data.selectedLesson.description}}</p>
 
       <div class="asl-card-grid">
-        <div class="asl-card" ng-class="{'asl-card-learned': sign.learned}"
-             ng-repeat="sign in c.data.signs track by sign.sys_id">
+        <div class="asl-card" ng-repeat="sign in c.data.signs track by sign.sys_id">
 
           <img class="asl-card-img" ng-if="sign.hasImage"
                ng-src="{{sign.image_url}}" alt="ASL sign for {{sign.label}}" />
@@ -70,16 +56,6 @@
           </a>
 
           <p class="asl-card-attr" ng-if="sign.attribution">{{sign.attribution}}</p>
-
-          <button type="button" class="btn btn-sm asl-card-btn"
-                  ng-class="sign.learned ? 'btn-success' : 'btn-default'"
-                  ng-click="c.toggleLearned(sign)"
-                  ng-disabled="!c.data.loggedIn || c.busy"
-                  title="{{c.data.loggedIn ? 'Toggle learned' : 'Sign in to save progress'}}">
-            <i class="fa" ng-class="sign.learned ? 'fa-check' : 'fa-circle-thin'"></i>
-            <span ng-if="sign.learned">Learned</span>
-            <span ng-if="!sign.learned">Mark learned</span>
-          </button>
         </div>
       </div>
 

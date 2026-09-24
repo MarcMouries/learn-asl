@@ -1,18 +1,17 @@
+/*
+ * Lessons widget — browse the sign library by lesson.
+ *
+ * The app does not offer sign-in, so there is no per-user progress here: with
+ * every visitor anonymous there would be nobody to attribute a "learned" flag
+ * to. Lessons are presented as a study reference instead of a tracked course.
+ *
+ * All reads use plain GlideRecord, which does not evaluate ACLs — that is why
+ * the content tables need no public ACLs for this to work anonymously.
+ */
 (function () {
   data.title = options.title || 'Lessons';
-  data.loggedIn = gs.isLoggedIn();
 
-  var action = input ? input.action : null;
-
-  // Toggle "learned" for one sign. Only meaningful for signed-in users; the ACLs
-  // also restrict progress rows to their owner.
-  if (action === 'toggle' && data.loggedIn && input.sign_id) {
-    setLearned(input.sign_id, input.learned === true || input.learned === 'true');
-  }
-
-  var learned = learnedSet();
-
-  data.lessons = getLessons(learned);
+  data.lessons = getLessons();
   data.selectedLesson = null;
   data.signs = [];
 
@@ -20,30 +19,13 @@
   if (lessonId) {
     data.selectedLesson = getLesson(lessonId);
     if (data.selectedLesson) {
-      data.signs = getSigns(lessonId, learned);
+      data.signs = getSigns(lessonId);
     }
   }
 
   // ------------------------------------------------------------------ helpers
 
-  // sys_id set of signs the current user has marked learned.
-  function learnedSet() {
-    var set = {};
-    if (!data.loggedIn) {
-      return set;
-    }
-    var p = new GlideRecord('x_snc_asl_progress');
-    p.addQuery('user', gs.getUserID());
-    p.addQuery('learned', true);
-    p.setLimit(1000);
-    p.query();
-    while (p.next()) {
-      set[p.getValue('sign')] = true;
-    }
-    return set;
-  }
-
-  function getLessons(learnedMap) {
+  function getLessons() {
     var out = [];
     var gr = new GlideRecord('x_snc_asl_lesson');
     gr.addQuery('active', true);
@@ -52,27 +34,18 @@
     gr.query();
     while (gr.next()) {
       var lessonId = gr.getUniqueValue();
-      var total = 0;
-      var done = 0;
 
-      var s = new GlideRecord('x_snc_asl_sign');
-      s.addQuery('lesson', lessonId);
-      s.setLimit(500);
-      s.query();
-      while (s.next()) {
-        total++;
-        if (learnedMap[s.getUniqueValue()]) {
-          done++;
-        }
-      }
+      var count = new GlideAggregate('x_snc_asl_sign');
+      count.addQuery('lesson', lessonId);
+      count.addAggregate('COUNT');
+      count.query();
+      var total = count.next() ? parseInt(count.getAggregate('COUNT'), 10) || 0 : 0;
 
       out.push({
         sys_id: lessonId,
         title: gr.getValue('title'),
         description: gr.getValue('description') || '',
         total: total,
-        learned: done,
-        percent: total > 0 ? Math.round((done / total) * 100) : 0,
       });
     }
     return out;
@@ -90,7 +63,7 @@
     };
   }
 
-  function getSigns(lessonId, learnedMap) {
+  function getSigns(lessonId) {
     var out = [];
     var gr = new GlideRecord('x_snc_asl_sign');
     gr.addQuery('lesson', lessonId);
@@ -98,11 +71,10 @@
     gr.setLimit(500);
     gr.query();
     while (gr.next()) {
-      var id = gr.getUniqueValue();
       var imageUrl = gr.getValue('image_url') || '';
       var referenceUrl = gr.getValue('reference_url') || '';
       out.push({
-        sys_id: id,
+        sys_id: gr.getUniqueValue(),
         label: gr.getValue('label'),
         token: gr.getValue('token'),
         description: gr.getValue('description') || '',
@@ -111,34 +83,8 @@
         attribution: gr.getValue('attribution') || '',
         reference_url: referenceUrl,
         hasReference: referenceUrl !== '',
-        learned: learnedMap[id] === true,
       });
     }
     return out;
-  }
-
-  // Upsert one progress row per (user, sign).
-  function setLearned(signId, isLearned) {
-    var userId = gs.getUserID();
-    var p = new GlideRecord('x_snc_asl_progress');
-    p.addQuery('user', userId);
-    p.addQuery('sign', signId);
-    p.setLimit(1);
-    p.query();
-
-    if (p.next()) {
-      p.setValue('learned', isLearned);
-      p.update();
-      return;
-    }
-
-    if (isLearned) {
-      var ins = new GlideRecord('x_snc_asl_progress');
-      ins.initialize();
-      ins.setValue('user', userId);
-      ins.setValue('sign', signId);
-      ins.setValue('learned', true);
-      ins.insert();
-    }
   }
 })();

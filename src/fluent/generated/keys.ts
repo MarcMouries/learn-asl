@@ -13,13 +13,25 @@ declare global {
                         table: 'sys_ux_screen'
                         id: '22920a7c93da5210df5f3ca47aba104b'
                     }
+                    '28e549d5c36bc75016eb2385e0013165': {
+                        table: 'sys_scope_privilege'
+                        id: '28e549d5c36bc75016eb2385e0013165'
+                    }
                     '2ae14b42931e1e10df5f3ca47aba1086': {
                         table: 'sys_ux_client_script'
                         id: '2ae14b42931e1e10df5f3ca47aba1086'
                     }
+                    '2c34a57e931b4f90df5f3ca47aba10c5': {
+                        table: 'sys_scope_privilege'
+                        id: '2c34a57e931b4f90df5f3ca47aba10c5'
+                    }
                     '6472c6f8c35a521016eb2385e001315f': {
                         table: 'sys_security_acl'
                         id: '6472c6f8c35a521016eb2385e001315f'
+                    }
+                    '64e50dd5c36bc75016eb2385e00131ec': {
+                        table: 'sys_scope_privilege'
+                        id: '64e50dd5c36bc75016eb2385e00131ec'
                     }
                     '6901123c935e5210df5f3ca47aba107e': {
                         table: 'sys_ux_screen_type'
@@ -72,6 +84,10 @@ declare global {
                     e472827c93da5210df5f3ca47aba10c2: {
                         table: 'sys_ux_page_property'
                         id: 'e472827c93da5210df5f3ca47aba10c2'
+                    }
+                    e834a57e931b4f90df5f3ca47aba10ce: {
+                        table: 'sys_scope_privilege'
+                        id: 'e834a57e931b4f90df5f3ca47aba10ce'
                     }
                     f501923c935e5210df5f3ca47aba1034: {
                         table: 'sys_uib_screen_test_values'
@@ -301,6 +317,7 @@ declare global {
                     x_snc_asl_lesson_read: {
                         table: 'sys_security_acl'
                         id: 'c12f203c65544e93881b5597db82da8f'
+                        deleted: true
                     }
                     x_snc_asl_lessons_col_1: {
                         table: 'sp_column'
@@ -322,13 +339,38 @@ declare global {
                         table: 'sp_widget'
                         id: '2d9bde17f2364f01af9ed1abc46c4da0'
                     }
+                    x_snc_asl_play_col_1: {
+                        table: 'sp_column'
+                        id: 'a83e0f154efe4d49bb351fe0b9fc8c06'
+                    }
+                    x_snc_asl_play_container_1: {
+                        table: 'sp_container'
+                        id: 'd881abada3fc4962ac46812b2d37cfde'
+                    }
+                    x_snc_asl_play_instance_1: {
+                        table: 'sp_instance'
+                        id: 'dbe805a9d1cf4b6c88f4e7c63054ab6d'
+                    }
+                    x_snc_asl_play_row_1: {
+                        table: 'sp_row'
+                        id: '33be47bae1724d689ca44ac0ef294671'
+                    }
+                    x_snc_asl_play_widget: {
+                        table: 'sp_widget'
+                        id: '98a6270a1af149528015258963e55870'
+                    }
                     x_snc_asl_portal: {
                         table: 'sp_portal'
                         id: '91617fbec36640faa4ad2b6122cf9073'
                     }
+                    x_snc_asl_priv_gr_delete: {
+                        table: 'sys_scope_privilege'
+                        id: 'ae2245c50d8245c6ae5f11030346b7be'
+                    }
                     x_snc_asl_progress_create: {
                         table: 'sys_security_acl'
                         id: 'cb664ff9c280425ea6d5dedc095d5c41'
+                        deleted: true
                     }
                     x_snc_asl_progress_delete: {
                         table: 'sys_security_acl'
@@ -342,9 +384,20 @@ declare global {
                         table: 'sys_security_acl'
                         id: '663e92b9f0b54ffa836199ec1aba53db'
                     }
+                    x_snc_asl_score_create: {
+                        table: 'sys_security_acl'
+                        id: '725f5548a0a8462a97cefef9139b31b0'
+                        deleted: true
+                    }
+                    x_snc_asl_score_read: {
+                        table: 'sys_security_acl'
+                        id: '77bd4ab4accf43089971bfc329c9ae77'
+                        deleted: true
+                    }
                     x_snc_asl_sign_read: {
                         table: 'sys_security_acl'
                         id: '8808ce32d7ad4a069eb12148bdb8fff4'
+                        deleted: true
                     }
                     x_snc_asl_sign_widget: {
                         table: 'sp_widget'
@@ -398,6 +451,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_db_object'
+                        id: '17d0d92869704eb58aa77de00ecc4379'
+                        key: {
+                            name: 'x_snc_asl_score'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '2671b1d5c956456c80b753352cc7e732'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'score'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '3073025ad8544829b98444f228bfafcd'
                         key: {
@@ -425,11 +493,29 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_index'
+                        id: '3b80017389c24cd78ff6b3d0275e9b84'
+                        key: {
+                            logical_table_name: 'x_snc_asl_score'
+                            col_name_string: 'score'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '3cb446fcb2cd4f3f86402fde2955f731'
                         key: {
                             name: 'x_snc_asl_sign'
                             element: 'image_url'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '45c1571311b241e9807269d9b368f2bf'
+                        deleted: true
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'user'
                             language: 'en'
                         }
                     },
@@ -543,10 +629,26 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '66f4a0c40e7742bf8cfbe9fc25a6d707'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'total_questions'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '6a20dcb718504b15b012963eb3bac302'
                         key: {
                             name: 'x_snc_asl_sign'
                             element: 'attribution'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '6e588b886ffa46cba4703246a607e5ce'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'NULL'
                         }
                     },
                     {
@@ -567,6 +669,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '7659533a255e443eaf78717cc2e4445c'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'accuracy'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '79322c4977f64073b2c481e603335d2b'
                         key: {
@@ -584,6 +694,13 @@ declare global {
                             value: 'punctuation'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'ua_table_licensing_config'
+                        id: '7e12c0ee48da4ef49ded2d2d4d181642'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
                         }
                     },
                     {
@@ -612,6 +729,21 @@ declare global {
                             name: 'x_snc_asl_sign'
                             element: 'order'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '90361d81d9704ba587cd8f09cea1c8bf'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'player_name'
+                        }
+                    },
+                    {
+                        table: 'ua_table_licensing_config'
+                        id: '90733a5419684a3cbf81d8201c81f20b'
+                        key: {
+                            name: 'x_snc_asl_score'
                         }
                     },
                     {
@@ -667,12 +799,27 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '9a6fab0197104f78809a4faba899cc7f'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '9d81f7cdf3aa4d099fee792218952186'
                         key: {
                             name: 'x_snc_asl_sign'
                             element: 'token'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sp_page'
+                        id: 'a51591e17688404bbf7dc7236f4ee23d'
+                        key: {
+                            id: 'x_snc_asl_play'
                         }
                     },
                     {
@@ -691,11 +838,46 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'a7b4e70d80e94bf586ecf02e24dcc509'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'NULL'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'a873d20d5fa6465baeaeee7753f2220e'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'token'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'a8d7f3cd3a7047e4b89324a13c7a688d'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'NULL'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_index'
                         id: 'a9ff02be9a5e42c8a7df04ba7fd4842e'
                         key: {
                             logical_table_name: 'x_snc_asl_progress'
                             col_name_string: 'user,sign'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'aa5bf59aa71b4451bf08d3ad3ea96b35'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'token'
+                            language: 'en'
                         }
                     },
                     {
@@ -708,11 +890,45 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'b12819ed5b1e4fa8ace374a3560cd297'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'score'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'b274e3d7e3614ef4be7d1318f49281f9'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'answers'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'b34adf1d7b814a988bee5221eb69793c'
                         key: {
                             name: 'x_snc_asl_sign'
                             element: 'category'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'b4cbabf477a14350afe55f77a1cbbbcf'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'consumed'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_db_object'
+                        id: 'b63a414315be4553adb751952a283722'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
                         }
                     },
                     {
@@ -742,10 +958,27 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_index'
+                        id: 'c63fd783edf24a65bbeca37e5fa99a30'
+                        key: {
+                            logical_table_name: 'x_snc_asl_quiz_session'
+                            col_name_string: 'token'
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: 'c9d21c33677e41f6bbac14ebe2fdbafa'
                         key: {
                             name: 'x_snc_asl_lesson'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'ca0dd143359f4b40912e400d0682b3d8'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'player_name'
+                            language: 'en'
                         }
                     },
                     {
@@ -765,10 +998,36 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: 'e16d9f2da6de4c34a3de6ad45215838d'
+                        deleted: true
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'user'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'ea3db561ea95468abd8c28ef720f1b7e'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'consumed'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: 'ee544ea5c9814fbb99148c0527438473'
                         key: {
                             name: 'x_snc_asl_progress'
                             element: 'user'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'ee9a7f8c69874101890b3882d95cf668'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'accuracy'
+                            language: 'en'
                         }
                     },
                     {
@@ -778,6 +1037,14 @@ declare global {
                             name: 'x_snc_asl_lesson'
                             element: 'title'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'efd958ab13bc4b1291fb4c595cd9c05f'
+                        key: {
+                            name: 'x_snc_asl_quiz_session'
+                            element: 'answers'
                         }
                     },
                     {
@@ -801,6 +1068,15 @@ declare global {
                         key: {
                             name: 'x_snc_asl_sign'
                             element: 'description'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'fbda569c17fb4244844619876a62f4a4'
+                        key: {
+                            name: 'x_snc_asl_score'
+                            element: 'total_questions'
+                            language: 'en'
                         }
                     },
                     {

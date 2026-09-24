@@ -1,0 +1,157 @@
+<div class="panel panel-default asl-play">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{c.data.title}}</h3>
+  </div>
+  <div class="panel-body">
+
+    <!-- ============================================ view 1: name entry -->
+    <div ng-if="c.data.view === 'name'">
+      <p class="asl-play-lead">
+        Names have no dedicated sign in ASL — they are fingerspelled. Enter your
+        first name to see it spelled out, then test yourself.
+      </p>
+
+      <div class="alert alert-danger" ng-if="c.data.error">{{c.data.error}}</div>
+
+      <form name="nameForm" ng-submit="c.begin()" novalidate>
+        <div class="form-group">
+          <label for="asl-play-name">Your first name</label>
+          <div class="asl-play-row">
+            <input type="text" id="asl-play-name" name="playerName"
+                   class="form-control asl-play-input"
+                   ng-model="c.nameInput" maxlength="20"
+                   placeholder="e.g. Marc" autocomplete="given-name" required />
+            <button type="submit" class="btn btn-primary asl-play-go"
+                    ng-disabled="!c.nameInput || c.busy">
+              <span ng-if="!c.busy">Show my name</span>
+              <span ng-if="c.busy">Working…</span>
+            </button>
+          </div>
+          <span class="help-block">Up to 20 characters. Accents are handled — José and Renée both work.</span>
+        </div>
+      </form>
+
+      <div ng-if="c.data.leaderboard.length">
+        <h4 class="asl-play-lb-heading">Top 10 all-time</h4>
+        <ol class="asl-play-lb">
+          <li ng-repeat="row in c.data.leaderboard track by $index">
+            <span class="asl-play-lb-name">{{row.player_name}}</span>
+            <span class="asl-play-lb-score">{{row.score}}/{{row.total}}</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ============================================ view 2: reveal -->
+    <div ng-if="c.data.view === 'reveal'">
+      <h4 class="asl-play-reveal-title">{{c.data.playerName}}, this is your name in ASL</h4>
+
+      <div class="asl-play-signs">
+        <div class="asl-play-sign" ng-repeat="sign in c.data.spelled track by $index">
+          <img class="asl-play-sign-img" ng-src="{{sign.image_url}}"
+               alt="ASL sign for {{sign.label}}" />
+          <div class="asl-play-sign-label">{{sign.label}}</div>
+        </div>
+      </div>
+
+      <div class="alert alert-warning" ng-if="c.data.skipped">
+        <i class="fa fa-info-circle"></i>
+        These characters have no letter in the ASL alphabet and were skipped:
+        <strong>{{c.data.skipped}}</strong>
+      </div>
+
+      <div class="asl-play-actions">
+        <button type="button" class="btn btn-primary" ng-click="c.startQuiz()">
+          Test me — {{c.data.questionCount}} questions
+        </button>
+        <button type="button" class="btn btn-default" ng-click="c.playAgain()">
+          Try another name
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================ view 3: quiz -->
+    <div ng-if="c.data.view === 'quiz'">
+      <div class="asl-play-quiz-head">
+        <span class="asl-play-counter">
+          Question {{c.index + 1}} of {{c.data.questions.length}}
+        </span>
+        <span class="asl-play-badge" ng-if="c.data.questions[c.index].from_name">
+          from your name
+        </span>
+      </div>
+
+      <div class="asl-play-progress">
+        <div class="asl-play-progress-fill" ng-style="{width: c.progressPercent() + '%'}"></div>
+      </div>
+
+      <p class="asl-play-question">Which letter is this?</p>
+
+      <div class="asl-play-quiz-sign">
+        <img class="asl-play-quiz-img"
+             ng-src="{{c.data.questions[c.index].image_url}}"
+             alt="Which letter is this ASL sign?" />
+      </div>
+
+      <div class="asl-play-options">
+        <button type="button" class="btn btn-default asl-play-option"
+                ng-repeat="opt in c.data.questions[c.index].options track by $index"
+                ng-click="c.choose(opt)" ng-disabled="c.busy">
+          {{opt}}
+        </button>
+      </div>
+
+      <p class="text-muted asl-play-note" ng-if="c.busy">Scoring your answers…</p>
+    </div>
+
+    <!-- ============================================ view 4: results -->
+    <div ng-if="c.data.view === 'results'">
+      <div class="asl-play-score">
+        <div class="asl-play-score-big">{{c.data.score}} / {{c.data.review.length}}</div>
+        <div class="asl-play-score-sub">{{c.data.accuracy}}% accuracy — nice work, {{c.data.playerName}}</div>
+      </div>
+
+      <h4>Review</h4>
+      <div class="asl-play-review">
+        <div class="asl-play-review-item"
+             ng-class="item.ok ? 'asl-play-ok' : 'asl-play-wrong'"
+             ng-repeat="item in c.data.review track by $index">
+          <img class="asl-play-review-img" ng-src="{{item.image_url}}"
+               alt="ASL sign for {{item.correct_label}}" />
+          <div class="asl-play-review-answer">
+            <span class="asl-play-review-correct">{{item.correct_label}}</span>
+            <span class="asl-play-review-yours" ng-if="!item.ok">you said {{item.chosen}}</span>
+            <i class="fa" ng-class="item.ok ? 'fa-check' : 'fa-times'"></i>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="asl-play-lb-heading">Top 10 all-time</h4>
+      <table class="table asl-play-lb-table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Player</th>
+            <th scope="col">Score</th>
+            <th scope="col">Accuracy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="row in c.data.leaderboard track by $index">
+            <td>{{row.rank}}</td>
+            <td>{{row.player_name}}</td>
+            <td>{{row.score}}/{{row.total}}</td>
+            <td>{{row.accuracy}}%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="asl-play-actions">
+        <button type="button" class="btn btn-primary" ng-click="c.playAgain()">
+          Play again
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
